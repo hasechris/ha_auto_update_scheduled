@@ -202,14 +202,14 @@ blueprint:
           multiline: false
 
     updater_timeout:
-      name: Updater Timeout
-      description: Specify how much time the automation waits for the updater to find the single update entity is now turned off. Per Default we wait 1 hour for each Update installation.
+      name: Updater Timeout - Seconds
+      description: Specify how much time in seconds the automation waits for the updater to find the single update entity is now turned off. Per Default we wait 1 hour (3600) for each Update installation.
       default: 3600
       selector:
         number:
           mode: box
           min: 10
-          max: 3600
+          max: 7200
     
     update_exclusions:
       name: (optional) Exclusions
