@@ -31,14 +31,14 @@ blueprint:
       selector:
         boolean:
     backup_timeout:
-      name: Backup Timeout
+      name: Backup Timeout - Minutes
       description: Specify how much time the automation waits for the backup process. We cant check wether the backup was successful. Per Default we wait 1 hour to finish the backup.
       default: 3600
       selector:
         number:
           mode: box
           min: 10
-          max: 3600
+          max: 60
     
     backup_location:
       name: Backup Location
@@ -653,14 +653,14 @@ action:
             alias: Check if telegram notifications are enabled
         then:
           - data:
-              message: "Backup is triggered - Waiting defined time: {{ input_backup_timeout|default(3600) }} minutes"
+              message: "Backup is triggered - Waiting defined time: {{ input_backup_timeout|default(60) }} minutes"
               target: "{{ input_notification_telegram_target_id }}"
               disable_notification: "{{ true if input_notification_telegram_disable_notification is true else false }}"
             alias: Telegram Houseofnerds Message to group chat
             action: telegram_bot.send_message
-      - alias: "Give {{ input_backup_timeout|default(3600) }} minutes for the backup" # There's no sensor for when the backup finishes
+      - alias: "Give {{ input_backup_timeout|default(60) }} minutes for the backup" # There's no sensor for when the backup finishes
         delay: 
-          minutes: "{{ input_backup_timeout|default(3600) }}"
+          minutes: "{{ input_backup_timeout|default(60) }}"
       - alias: If Telegram notifications are enabled send telegram message to specified target.
         if:
           - condition: template
